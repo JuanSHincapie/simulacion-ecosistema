@@ -1,4 +1,4 @@
-pub struct Day(pun f64);
+pub struct Day(pub f64);
 
 pub struct Tick(pub u64);
 

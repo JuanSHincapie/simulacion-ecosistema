@@ -4,7 +4,7 @@ pub struct Timer {
     pub current_day: Day,
     pub current_tick: Tick,
     accumulator_day: DtDay,
-    dt_day: DtDat,
+    dt_day: DtDay,
     days_per_second: f64,
     max_steps_per_frame: u32,
     pub time_scale: f64,
@@ -12,7 +12,7 @@ pub struct Timer {
 }
 
 impl Timer {
-    pub fn new(ticks_per_day: u32, days_per_secord: f64, max_steps_per_frame: u32) -> Self {
+    pub fn new(ticks_per_day: u32, days_per_second: f64, max_steps_per_frame: u32) -> Self {
         let dt_day = 1.0/ticks_per_day as f64;
         Self {
             current_day: Day(0.0),
@@ -34,7 +34,7 @@ pub struct TimerStep{
 
 
 impl Timer {
-    pub fn update(&mut self, real_dt: Seconds) -> TimerStep {
+    pub fn update(&mut self, real_dt: &Seconds) -> TimerStep {
         if self.paused {
             return TimerStep{ steps_to_run: 0, end_of_day: false };
         }
