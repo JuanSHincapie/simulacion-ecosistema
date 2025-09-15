@@ -1,0 +1,20 @@
+id = "rabbit"
+display_name = "Conejo"
+
+[gompertz]
+a = 3.0
+b = 0.015
+t0 = 40.0
+
+[reproduction]
+p_daily = 0.02
+sex_ratio = 0.5
+offspring_min = 1
+offspring_max = 5
+
+[health]
+p_sick = 0.01
+p_die_if_sick = 0.10
+
+[maturity]
+age_days = 80

@@ -1,0 +1,9 @@
+ticks_per_day = 1440
+days_per_second = 0.25
+max_steps_per_frame = 32
+time_scale = 1.0
+seed = 42
+
+[spawn]
+rabbit = 50
+deer = 12

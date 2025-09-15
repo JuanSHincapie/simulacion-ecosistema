@@ -5,6 +5,21 @@ mod core {
     pub mod time;
 }
 
+mod io {
+    pub mod config;
+}
+
+mod domain {
+    pub mod traits;
+    pub mod prey;
+    pub mod predator;
+    pub mod world;
+}
+
+mod systems {
+    pub mod aging;
+}
+
 mod sim {
     pub mod engine;
 }
@@ -18,16 +33,17 @@ use core::units::Seconds;
 use sim::engine::Engine;
 
 #[macroquad::main("Ecosim")]
+async fn main() -> anyhow::Result<()> {
 
-async fn main() {
-    let ticks_per_day = 2400;
-    let days_per_second = 0.25;
-    let max_steps_per_frame = 32;
-
-    let mut timer = Timer::new(ticks_per_day, days_per_second, max_steps_per_frame);
-    let mut engine = Engine::new();
-
-    let mut fast_forward = false;
+  let mut engine = Engine::new()?;
+  let wcfg = &engine.cfg.world;
+  let mut timer = Timer::new(
+    wcfg.ticks_per_day,
+    wcfg.days_per_second,
+    wcfg.max_steps_per_frame,
+  );
+  timer.time_scale = wcfg.time_scale;
+  let mut fast_forward = false;
 
     loop {
        if is_key_pressed(KeyCode::Space) {
@@ -51,7 +67,7 @@ async fn main() {
         engine.run_steps(step.steps_to_run);
 
         if step.end_of_day {
-            // TODO: Este bloque con los actividades de final de día ╰（‵□′）╯
+           engine.on_end_of_day();
         }
 
         clear_background(BLACK);
