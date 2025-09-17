@@ -3,6 +3,9 @@ use macroquad::prelude::*;
 mod core {
     pub mod units;
     pub mod time;
+    pub mod math { 
+        pub mod gompertz;
+    }
 }
 
 mod io {
@@ -18,6 +21,7 @@ mod domain {
 
 mod systems {
     pub mod aging;
+    pub mod growth;
 }
 
 mod sim {

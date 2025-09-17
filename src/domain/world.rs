@@ -1,6 +1,7 @@
 use super::prey::{Prey, SpeciesProfile};
 use super::predator::Predator;
 use std::collections::HashMap;
+use crate::core::units::{Age, Weight};
 
 #[derive(Debug)]
 pub struct World {
@@ -24,7 +25,7 @@ impl World {
             for(id, count) in spawn.iter() {
                 if let Some(&idx) = species_map.get(id) {
                     for _ in 0..*count {
-                        prey.push(Prey {species_idx: idx, age_days: 0});
+                        prey.push(Prey {species_idx: idx, age_days: Age(0), weight: Weight(0.0)});
                     }
                 }
             }

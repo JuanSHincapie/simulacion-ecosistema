@@ -2,8 +2,10 @@ use crate::domain::predator::Predator;
 use crate::domain::prey::SpeciesProfile;
 use crate::domain::world::World;
 use crate::systems::aging::AgingSystem;
+use crate::systems::growth::GrowthSystem;
 use crate::io::config::{AllConfig, load_all};
-
+use crate::core::math::gompertz::Gompertz;
+use crate::core::units::{Age, Weight};
 
 pub struct Engine {
     pub world: World,
@@ -17,6 +19,11 @@ impl Engine {
             id: s.id.clone(),
             display_name: s.display_name.clone(),
             maturity_days: s.maturity.age_days,
+            gompertz: Gompertz {
+                a: s.gompertz.a,
+                b: s.gompertz.b,
+                t0: s.gompertz.t0,
+            }
         }}).collect();
 
         let predator = Predator {
@@ -35,6 +42,7 @@ impl Engine {
 
     pub fn on_end_of_day(&mut self) {
         AgingSystem::apply_one_day(&mut self.world);
+        GrowthSystem::apply_one_day(&mut self.world);
     }
 }
 
